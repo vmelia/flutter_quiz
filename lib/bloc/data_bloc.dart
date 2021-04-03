@@ -6,9 +6,32 @@ import '../entities/question_pair.dart';
 import '../model/quiz_item.dart';
 import '../model/quiz_repository.dart';
 
-part 'data_event.dart';
-part 'data_state.dart';
+// Events.
+@immutable
+abstract class DataEvent {}
 
+class LoadDataEvent extends DataEvent {
+  final String assetPath;
+
+  LoadDataEvent(this.assetPath);
+}
+
+// States.
+@immutable
+abstract class DataState {}
+
+class DataInitial extends DataState {}
+
+class DataLoadingState extends DataState {}
+
+class DataLoadedState extends DataState {
+  final List<QuizItem> leftList;
+  final List<QuizItem> rightList;
+
+  DataLoadedState(this.leftList, this.rightList);
+}
+
+// Bloc.
 class DataBloc extends Bloc<DataEvent, DataState> {
   DataBloc() : super(DataInitial());
 
@@ -18,7 +41,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
       yield DataLoadingState();
       final data = await load(event.assetPath);
       yield createLoadDataState(data);
-    } 
+    }
   }
 }
 
@@ -36,5 +59,6 @@ DataLoadedState createLoadDataState(List<QuestionPair> data) {
     rightList.add(QuizItem(data[i].right, i));
   }
 
+  rightList.sort((a, b) => a.name.compareTo(b.name));
   return DataLoadedState(leftList, rightList);
 }
