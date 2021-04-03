@@ -1,16 +1,20 @@
 part of 'selection_bloc.dart';
 
 @immutable
-abstract class SelectionState {}
+abstract class SelectionState {
+  final int index;
 
-class SelectionInitial extends SelectionState {}
-
-class LeftSelectionChangedState extends SelectionState {
-  final int selected;
-  LeftSelectionChangedState(this.selected);
+  SelectionState(this.index);
 }
 
-class RightSelectionChangedState extends SelectionState {
-  final int selected;
-  RightSelectionChangedState(this.selected);
+class SelectionInitial extends SelectionState {
+  SelectionInitial() : super(0);
+}
+
+class PageChangedState extends SelectionState {
+  PageChangedState(int selected) : super(selected);
+}
+
+class SelectionChangedState extends SelectionState {
+  SelectionChangedState(int selected) : super(selected);
 }

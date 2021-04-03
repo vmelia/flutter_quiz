@@ -3,14 +3,14 @@ part of 'selection_bloc.dart';
 @immutable
 abstract class SelectionEvent {}
 
-abstract class PageChangedEvent extends SelectionEvent {}
-
-class LeftPageChangedEvent extends PageChangedEvent {
-  final int page;
-  LeftPageChangedEvent(this.page);
+// User swipes the carousel.
+class PageChangedEvent extends SelectionEvent {
+  final int index;
+  PageChangedEvent(this.index);  
 }
 
-class RightPageChangedEvent extends PageChangedEvent {
-  final int page;
-  RightPageChangedEvent(this.page);
+// User clicks on a button.
+class SelectionChangedEvent extends SelectionEvent {
+  final int index;
+  SelectionChangedEvent(this.index);  
 }

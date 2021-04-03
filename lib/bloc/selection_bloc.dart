@@ -11,10 +11,10 @@ class SelectionBloc extends Bloc<SelectionEvent, SelectionState> {
 
   @override
   Stream<SelectionState> mapEventToState(SelectionEvent event) async* {
-    if (event is LeftPageChangedEvent) {
-      yield LeftSelectionChangedState(event.page);
-    } else if (event is RightPageChangedEvent) {
-      yield RightSelectionChangedState(event.page);
+    if (event is PageChangedEvent) {
+      yield PageChangedState(event.index);
+    } else if (event is SelectionChangedEvent) {
+      yield SelectionChangedState(event.index);
     }
   }
 }

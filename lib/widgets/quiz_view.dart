@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/data_bloc.dart';
 import '../bloc/selection_bloc.dart';
+import '../core/helpers/iterable_helpers.dart';
 import '../model/quiz_item.dart';
 
 final double _viewportFraction = 0.1;
@@ -21,7 +22,7 @@ class QuizView extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(title: Text('Quizzer')),
             floatingActionButton: Align(
-              alignment: Alignment(0, 0),
+              alignment: Alignment(0.1, 0.16),
               child: FloatingActionButton(
                 child: const Text(
                   '=',
@@ -35,16 +36,22 @@ class QuizView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Flexible(
-                    child: buildLeftCarousel(
-                      context,
-                      state.leftList,
+                  BlocProvider(
+                    create: (context) => SelectionBloc(),
+                    child: Flexible(
+                      child: buildLeftCarousel(
+                        context,
+                        state.leftList,
+                      ),
                     ),
                   ),
-                  Flexible(
-                    child: buildRightCarousel(
-                      context,
-                      state.rightList,
+                  BlocProvider(
+                    create: (context) => SelectionBloc(),
+                    child: Flexible(
+                      child: buildRightCarousel(
+                        context,
+                        state.rightList,
+                      ),
                     ),
                   ),
                 ]),
@@ -57,57 +64,63 @@ class QuizView extends StatelessWidget {
   }
 }
 
-CarouselSlider buildLeftCarousel(
+Widget buildLeftCarousel(
   BuildContext context,
   List<QuizItem> items,
 ) {
-  return CarouselSlider(
-    options: CarouselOptions(
-        viewportFraction: _viewportFraction,
-        scrollDirection: _scrollDirection,
-        onPageChanged: (index, reason) {
-          BlocProvider.of<SelectionBloc>(context).add(LeftPageChangedEvent(index));
-        }),
-    items: items.map((item) {
-      return buildLeftItem(context, item);
-    }).toList(),
-  );
-}
-
-Builder buildLeftItem(BuildContext context, QuizItem item) {
-  final isSelected = false; //ToDo: Fix
-  return Builder(
-    builder: (BuildContext context) {
-      return Container(
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(color: isSelected ? Colors.red : Colors.white),
-          child: Text(
-            item.name,
-            style: const TextStyle(fontSize: 24),
-          ));
+  final CarouselController _controller = CarouselController();
+  return BlocConsumer<SelectionBloc, SelectionState>(
+    listener: (context, state) {
+      if (state is SelectionChangedState) {
+        _controller.animateToPage(state.index);
+      }
+    },
+    builder: (context, state) {
+      return CarouselSlider(
+        carouselController: _controller,
+        options: CarouselOptions(
+            viewportFraction: _viewportFraction,
+            scrollDirection: _scrollDirection,
+            onPageChanged: (index, reason) {
+              BlocProvider.of<SelectionBloc>(context).add(PageChangedEvent(index));
+            }),
+        items: items.mapIndexed((item, index) {
+          return buildItem(context, item, index, state.index == index);
+        }).toList(),
+      );
     },
   );
 }
 
-CarouselSlider buildRightCarousel(
+Widget buildRightCarousel(
   BuildContext context,
   List<QuizItem> items,
 ) {
-  return CarouselSlider(
-    options: CarouselOptions(
-        viewportFraction: _viewportFraction,
-        scrollDirection: _scrollDirection,
-        onPageChanged: (index, reason) {
-          BlocProvider.of<SelectionBloc>(context).add(RightPageChangedEvent(index));
-        }),
-    items: items.map((item) {
-      return buildRightItem(context, item);
-    }).toList(),
+  final CarouselController _controller = CarouselController();
+  return BlocConsumer<SelectionBloc, SelectionState>(
+    listener: (context, state) {
+      if (state is SelectionChangedState) {
+        _controller.animateToPage(state.index);
+      }
+    },
+    builder: (context, state) {
+      return CarouselSlider(
+        carouselController: _controller,
+        options: CarouselOptions(
+            viewportFraction: _viewportFraction,
+            scrollDirection: _scrollDirection,
+            onPageChanged: (index, reason) {
+              BlocProvider.of<SelectionBloc>(context).add(PageChangedEvent(index));
+            }),
+        items: items.mapIndexed((item, index) {
+          return buildItem(context, item, index, state.index == index);
+        }).toList(),
+      );
+    },
   );
 }
 
-Builder buildRightItem(BuildContext context, QuizItem item) {
-  final isSelected = false; //ToDo: Fix
+Widget buildItem(BuildContext context, QuizItem item, int index, bool isSelected) {
   return Builder(
     builder: (BuildContext context) {
       return ElevatedButton(
@@ -118,7 +131,9 @@ Builder buildRightItem(BuildContext context, QuizItem item) {
             borderRadius: BorderRadius.circular(20),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          BlocProvider.of<SelectionBloc>(context).add(SelectionChangedEvent(index));
+        },
         child: Text(
           item.name,
         ),
