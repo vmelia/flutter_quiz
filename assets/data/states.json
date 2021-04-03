@@ -1,0 +1,202 @@
+[
+  {
+    "left": "Alabama",
+    "right": "Montgomery"
+  },
+  {
+    "left": "Alaska",
+    "right": "Juneau"
+  },
+  {
+    "left": "Arizona",
+    "right": "Phoenix"
+  },
+  {
+    "left": "Arkansas",
+    "right": "Little Rock"
+  },
+  {
+    "left": "California",
+    "right": "Sacramento"
+  },
+  {
+    "left": "Colorado",
+    "right": "Denver"
+  },
+  {
+    "left": "Connecticut",
+    "right": "Hartford"
+  },
+  {
+    "left": "Delaware",
+    "right": "Dover"
+  },
+  {
+    "left": "Florida",
+    "right": "Tallahassee"
+  },
+  {
+    "left": "Georgia",
+    "right": "Atlanta"
+  },
+  {
+    "left": "Hawaii",
+    "right": "Honolulu"
+  },
+  {
+    "left": "Idaho",
+    "right": "Boise"
+  },
+  {
+    "left": "Illinois",
+    "right": "Springfield"
+  },
+  {
+    "left": "Indiana",
+    "right": "Indianapolis"
+  },
+  {
+    "left": "Iowa",
+    "right": "Des Moines"
+  },
+  {
+    "left": "Kansas",
+    "right": "Topeka"
+  },
+  {
+    "left": "Kentucky",
+    "right": "Frankfort"
+  },
+  {
+    "left": "Louisiana",
+    "right": "Baton Rouge"
+  },
+  {
+    "left": "Maine",
+    "right": "Augusta"
+  },
+  {
+    "left": "Maryland",
+    "right": "Annapolis"
+  },
+  {
+    "left": "Massachusetts",
+    "right": "Boston"
+  },
+  {
+    "left": "Michigan",
+    "right": "Lansing"
+  },
+  {
+    "left": "Minnesota",
+    "right": "St. Paul"
+  },
+  {
+    "left": "Mississippi",
+    "right": "Jackson"
+  },
+  {
+    "left": "Missouri",
+    "right": "Jefferson City"
+  },
+  {
+    "left": "Montana",
+    "right": "Helena"
+  },
+  {
+    "left": "Nebraska",
+    "right": "Lincoln"
+  },
+  {
+    "left": "Nevada",
+    "right": "Carson City"
+  },
+  {
+    "left": "New Hampshire",
+    "right": "Concord"
+  },
+  {
+    "left": "New Jersey",
+    "right": "Trenton"
+  },
+  {
+    "left": "New Mexico",
+    "right": "Santa Fe"
+  },
+  {
+    "left": "New York",
+    "right": "Albany"
+  },
+  {
+    "left": "North Carolina",
+    "right": "Raleigh"
+  },
+  {
+    "left": "North Dakota",
+    "right": "Bismarck"
+  },
+  {
+    "left": "Ohio",
+    "right": "Columbus"
+  },
+  {
+    "left": "Oklahoma",
+    "right": "Oklahoma City"
+  },
+  {
+    "left": "Oregon",
+    "right": "Salem"
+  },
+  {
+    "left": "Pennsylvania",
+    "right": "Harrisburg"
+  },
+  {
+    "left": "Rhode Island",
+    "right": "Providence"
+  },
+  {
+    "left": "South Carolina",
+    "right": "Columbia"
+  },
+  {
+    "left": "South Dakota",
+    "right": "Pierre"
+  },
+  {
+    "left": "Tennessee",
+    "right": "Nashville"
+  },
+  {
+    "left": "Texas",
+    "right": "Austin"
+  },
+  {
+    "left": "Utah",
+    "right": "Salt Lake City"
+  },
+  {
+    "left": "Vermont",
+    "right": "Montpelier"
+  },
+  {
+    "left": "Virginia",
+    "right": "Richmond"
+  },
+  {
+    "left": "Washington",
+    "right": "Olympia"
+  },
+  {
+    "left": "West Virginia",
+    "right": "Charleston"
+  },
+  {
+    "left": "Wisconsin",
+    "right": "Madison"
+  },
+  {
+    "left": "Wyoming",
+    "right": "Cheyenne"
+  }
+]
