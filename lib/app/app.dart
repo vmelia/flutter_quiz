@@ -13,8 +13,7 @@ class App extends StatelessWidget {
         BlocProvider<GridBloc>(
           create: (_) => GridBloc()..add(LoadDataEvent('assets/data/states.json')),
         ),
-        BlocProvider<GameBloc>(
-          create: (context) => GameBloc()),
+        BlocProvider<GameBloc>(create: (context) => GameBloc()),
       ],
       child: _buildApp(context),
     );
@@ -24,7 +23,7 @@ class App extends StatelessWidget {
 Widget _buildApp(BuildContext context) {
   return MaterialApp(
     theme: ThemeData(
-      scaffoldBackgroundColor: Colours.appBackground,
+      //scaffoldBackgroundColor: Colours.appBackground,
       accentColor: Colours.appAccent,
       appBarTheme: AppBarTheme(color: Colours.appBar),
     ),

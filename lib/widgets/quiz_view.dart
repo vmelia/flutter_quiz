@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,9 +25,17 @@ class QuizView extends StatelessWidget {
   }
 
   Widget _buildWidget(BuildContext context) {
-    return BlocBuilder<GridBloc, GridState>(
+    return BlocConsumer<GridBloc, GridState>(
+      listener: (context, state) {
+        // if (state is DataChangedState) {
+        //   if (state.removedRow) {
+        //     _leftController.animateToPage(_leftSelectionBloc.selectedIndex);
+        //     _rightController.animateToPage(_rightSelectionBloc.selectedIndex);
+        //   }
+        // }
+      },
       builder: (context, state) {
-        if (state is DataLoadedState) {
+        if (state is DataChangedState) {
           return Scaffold(
             appBar: AppBar(title: Text('Quizzer')),
             floatingActionButton: Align(
@@ -37,8 +47,7 @@ class QuizView extends StatelessWidget {
                 ),
                 autofocus: false,
                 onPressed: () {
-                  BlocProvider.of<GameBloc>(context).add(AttemptAnswerEvent(
-                      state.quizData.left[_leftSelectionBloc.selectedIndex],
+                  context.read<GameBloc>().add(AttemptAnswerEvent(state.quizData.left[_leftSelectionBloc.selectedIndex],
                       state.quizData.right[_rightSelectionBloc.selectedIndex]));
                 },
               ),
@@ -95,7 +104,7 @@ Widget buildLeftCarousel(
             viewportFraction: _viewportFraction,
             scrollDirection: _scrollDirection,
             onPageChanged: (index, reason) {
-              BlocProvider.of<SelectionBloc>(context).add(PageChangedEvent(index));
+              context.read<SelectionBloc>().add(PageChangedEvent(index));
             }),
         items: items.mapIndexed((item, index) {
           return buildItem(context, item, index, state.index == index);
@@ -123,7 +132,8 @@ Widget buildRightCarousel(
             viewportFraction: _viewportFraction,
             scrollDirection: _scrollDirection,
             onPageChanged: (index, reason) {
-              BlocProvider.of<SelectionBloc>(context).add(PageChangedEvent(index));
+              log('onPageChanged($index, $reason)');
+              context.read<SelectionBloc>().add(PageChangedEvent(index));
             }),
         items: items.mapIndexed((item, index) {
           return buildItem(context, item, index, state.index == index);
@@ -147,7 +157,7 @@ Widget buildItem(BuildContext context, QuizItem item, int index, bool isSelected
             ),
           ),
           onPressed: () {
-            BlocProvider.of<SelectionBloc>(context).add(SelectionChangedEvent(index));
+            context.read<SelectionBloc>().add(SelectionChangedEvent(index));
           },
           child: Text(
             item.name,

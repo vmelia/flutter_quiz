@@ -16,6 +16,12 @@ class LoadDataEvent extends GridEvent {
   LoadDataEvent(this.assetPath);
 }
 
+class RemoveCorrectAnswerEvent extends GridEvent {
+  final int value;
+
+  RemoveCorrectAnswerEvent(this.value);
+}
+
 // States.
 @immutable
 abstract class GridState {}
@@ -24,10 +30,11 @@ class GridInitial extends GridState {}
 
 class DataLoadingState extends GridState {}
 
-class DataLoadedState extends GridState {
+class DataChangedState extends GridState {
   final QuizData quizData;
+  final bool removedRow;
 
-  DataLoadedState(this.quizData);
+  DataChangedState(this.quizData, {this.removedRow = false});
 }
 
 // Bloc.
@@ -42,8 +49,12 @@ class GridBloc extends Bloc<GridEvent, GridState> {
       yield DataLoadingState();
       final rawData = await load(event.assetPath);
       quizData = createQuizData(rawData);
-      yield DataLoadedState(quizData);
-    } 
+      yield DataChangedState(quizData);
+    } else if (event is RemoveCorrectAnswerEvent) {
+      quizData.left.removeWhere((x) => x.value == event.value);
+      quizData.right.removeWhere((x) => x.value == event.value);
+      yield DataChangedState(quizData, removedRow: true);
+    }
   }
 }
 

@@ -17,12 +17,6 @@ class AttemptAnswerEvent extends GameEvent {
   AttemptAnswerEvent(this.left, this.right);
 }
 
-class RemoveCorrectAnswerEvent extends GameEvent {
-  final int value;
-
-  RemoveCorrectAnswerEvent(this.value);
-}
-
 // States.
 @immutable
 abstract class GameState {}
@@ -36,7 +30,8 @@ abstract class AnswerState extends GameState {
 }
 
 class AnswerCorrectState extends AnswerState {
-  AnswerCorrectState() : super('Correct', Colours.answerCorrect);
+  final int value;
+  AnswerCorrectState(this.value) : super('Correct', Colours.answerCorrect);
 }
 
 class AnswerIncorrectState extends AnswerState {
@@ -53,7 +48,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   Stream<GameState> mapEventToState(GameEvent event) async* {
     if (event is AttemptAnswerEvent) {
       if (event.left.value == event.right.value) {
-        yield AnswerCorrectState();
+        yield AnswerCorrectState(event.left.value);
       } else {
         yield AnswerIncorrectState();
       }
