@@ -23,7 +23,7 @@ class App extends StatelessWidget {
 Widget _buildApp(BuildContext context) {
   return MaterialApp(
     theme: ThemeData(
-      //scaffoldBackgroundColor: Colours.appBackground,
+      scaffoldBackgroundColor: Colours.appBackground,
       accentColor: Colours.appAccent,
       appBarTheme: AppBarTheme(color: Colours.appBar),
     ),

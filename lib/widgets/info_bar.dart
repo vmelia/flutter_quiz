@@ -13,10 +13,16 @@ class InfoBar extends StatelessWidget {
     return BlocBuilder<GameBloc, GameState>(
       builder: (context, state) {
         return Container(
+          decoration: BoxDecoration(
+              color: colour,
+              border: Border.all(
+                  color: Colours.text, // Set border color
+                  width: 1.0), // Set border width
+              borderRadius: BorderRadius.all(Radius.circular(30.0)), // Set rounded corner radius
+              boxShadow: [BoxShadow(blurRadius: 10, color: Colors.transparent, offset: Offset(1, 3))]),
           width: double.infinity,
-          color: colour,
           child: Padding(
-            padding: const EdgeInsets.only(left: 10.0, top: 10.0, right: 10.0, bottom: 30.0),
+            padding: const EdgeInsets.only(left: 10.0, top: 15.0, right: 10.0, bottom: 15.0),
             child: Center(
               child: Text(
                 text,

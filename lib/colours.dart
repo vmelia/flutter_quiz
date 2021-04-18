@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Colours {
-  static Color appBackground = Colors.lightBlue;
+  static Color appBackground = Colors.grey;
   static Color appBar = Colors.lightBlue;
   static Color appAccent = Colors.cyan;
 
