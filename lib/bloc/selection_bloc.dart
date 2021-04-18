@@ -41,7 +41,7 @@ class SelectionChangedState extends SelectionState {
 
 // Bloc.
 class SelectionBloc extends Bloc<SelectionEvent, SelectionState> {
-  int selectedIndex;
+  int selectedIndex = 0;
   SelectionBloc() : super(SelectionInitial());
 
   @override

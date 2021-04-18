@@ -10,7 +10,6 @@ class QuizRepositoryImpl extends QuizRepository {
   Future<List<QuestionPair>> load(String filename) async {
     var jsonText = await rootBundle.loadString(filename);
 
-    await Future.delayed(Duration(seconds: 2));
     return questionPairsFromJson(jsonText);
   }
 }

@@ -2,9 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/answer_bloc.dart';
-import '../bloc/data_bloc.dart';
+import '../bloc/game_bloc.dart';
+import '../bloc/grid_bloc.dart';
 import '../bloc/selection_bloc.dart';
+import '../colours.dart';
 import '../core/helpers/iterable_helpers.dart';
 import '../model/quiz_item.dart';
 
@@ -18,13 +19,17 @@ class QuizView extends StatelessWidget {
   final _rightController = CarouselControllerImpl();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DataBloc, DataState>(
+    return _buildWidget(context);
+  }
+
+  Widget _buildWidget(BuildContext context) {
+    return BlocBuilder<GridBloc, GridState>(
       builder: (context, state) {
         if (state is DataLoadedState) {
           return Scaffold(
             appBar: AppBar(title: Text('Quizzer')),
             floatingActionButton: Align(
-              alignment: Alignment(0.1, 0.16),
+              alignment: Alignment(0.1, 0.17), //ToDo: Align properly.
               child: FloatingActionButton(
                 child: const Text(
                   '=',
@@ -32,10 +37,9 @@ class QuizView extends StatelessWidget {
                 ),
                 autofocus: false,
                 onPressed: () {
-                  BlocProvider.of<AnswerBloc>(context).add(AttemptAnswerEvent(
-                    state.leftList[_leftSelectionBloc.selectedIndex],
-                    state.rightList[_rightSelectionBloc.selectedIndex]
-                  ));
+                  BlocProvider.of<GameBloc>(context).add(AttemptAnswerEvent(
+                      state.quizData.left[_leftSelectionBloc.selectedIndex],
+                      state.quizData.right[_rightSelectionBloc.selectedIndex]));
                 },
               ),
             ),
@@ -49,7 +53,7 @@ class QuizView extends StatelessWidget {
                       child: buildLeftCarousel(
                         context,
                         _leftController,
-                        state.leftList,
+                        state.quizData.left,
                       ),
                     ),
                   ),
@@ -59,7 +63,7 @@ class QuizView extends StatelessWidget {
                       child: buildRightCarousel(
                         context,
                         _rightController,
-                        state.rightList,
+                        state.quizData.right,
                       ),
                     ),
                   ),
@@ -132,21 +136,33 @@ Widget buildRightCarousel(
 Widget buildItem(BuildContext context, QuizItem item, int index, bool isSelected) {
   return Builder(
     builder: (BuildContext context) {
-      return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: isSelected ? Colors.green : Colors.grey,
-          side: BorderSide(),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+      return SizedBox(
+        height: double.infinity,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: buttonColour(isSelected),
+            side: BorderSide(),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
           ),
-        ),
-        onPressed: () {
-          BlocProvider.of<SelectionBloc>(context).add(SelectionChangedEvent(index));
-        },
-        child: Text(
-          item.name,
+          onPressed: () {
+            BlocProvider.of<SelectionBloc>(context).add(SelectionChangedEvent(index));
+          },
+          child: Text(
+            item.name,
+            style: TextStyle(color: textColour(isSelected), fontSize: 17),
+          ),
         ),
       );
     },
   );
+}
+
+Color buttonColour(bool isSelected) {
+  return isSelected ? Colours.buttonSelected : Colours.buttonDeselected;
+}
+
+Color textColour(bool isSelected) {
+  return isSelected ? Colours.buttonSelectedText : Colours.buttonDeselectedText;
 }
