@@ -8,8 +8,6 @@ import '../widgets/info_bar.dart';
 import '../widgets/quiz_view.dart';
 
 class QuizPage extends StatelessWidget {
-  const QuizPage();
-
   @override
   Widget build(BuildContext context) {
     return _buildPage(context);

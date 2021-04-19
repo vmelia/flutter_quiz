@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   @override
   Stream<GameState> mapEventToState(GameEvent event) async* {
     if (event is AttemptAnswerEvent) {
+      log('AttemptAnswerEvent(${event.left.name} (${event.left.value}), ${event.right.name}: (${event.right.value}))');
       if (event.left.value == event.right.value) {
         yield AnswerCorrectState(event.left.value);
       } else {

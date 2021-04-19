@@ -27,6 +27,6 @@ Widget _buildApp(BuildContext context) {
       accentColor: Colours.appAccent,
       appBarTheme: AppBarTheme(color: Colours.appBar),
     ),
-    home: const QuizPage(),
+    home: QuizPage(),
   );
 }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,18 +24,19 @@ class QuizView extends StatelessWidget {
 
   Widget _buildWidget(BuildContext context) {
     return BlocConsumer<GridBloc, GridState>(
-      listener: (context, state) {
-        // if (state is DataChangedState) {
-        //   if (state.removedRow) {
-        //     _leftController.animateToPage(_leftSelectionBloc.selectedIndex);
-        //     _rightController.animateToPage(_rightSelectionBloc.selectedIndex);
-        //   }
-        // }
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         if (state is DataChangedState) {
           return Scaffold(
-            appBar: AppBar(title: Text('Quizzer')),
+            appBar: AppBar(
+              title: Text('Quizzer'),
+              actions: [
+                TextButton(
+                  onPressed: () {},
+                  child: Text('reset'),
+                ),
+              ],
+            ),
             floatingActionButton: Align(
               alignment: Alignment(0.1, 0.17), //ToDo: Align properly.
               child: FloatingActionButton(
@@ -101,6 +100,7 @@ Widget buildLeftCarousel(
       return CarouselSlider(
         carouselController: controller,
         options: CarouselOptions(
+            enableInfiniteScroll: false,
             viewportFraction: _viewportFraction,
             scrollDirection: _scrollDirection,
             onPageChanged: (index, reason) {
@@ -129,10 +129,11 @@ Widget buildRightCarousel(
       return CarouselSlider(
         carouselController: controller,
         options: CarouselOptions(
+            enableInfiniteScroll: false,
             viewportFraction: _viewportFraction,
             scrollDirection: _scrollDirection,
             onPageChanged: (index, reason) {
-              log('onPageChanged($index, $reason)');
+              //log('onPageChanged($index, $reason)');
               context.read<SelectionBloc>().add(PageChangedEvent(index));
             }),
         items: items.mapIndexed((item, index) {
